@@ -1,5 +1,7 @@
+// Author: Calin Ilie
+// Revamp: 2017
 
-// returneaza o culoare la intamplare
+// Returns a random color
 function getRandomColor() {
     var letters = '0123456789ABCDEF'.split('');
     var color = '#';
@@ -9,7 +11,7 @@ function getRandomColor() {
     return color;
 }
 
-// graf nou
+// Instantiate the graph
 var graph = new Springy.Graph();
 
 // creaza o matrice de adiacenta la intamplare si o incarca pe ecran
