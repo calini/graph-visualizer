@@ -14,7 +14,7 @@ function getRandomColor() {
 // Instantiate the graph
 var graph = new Springy.Graph();
 
-// creaza o matrice de adiacenta la intamplare si o incarca pe ecran
+// Creates a random adjancy matrix and then renders it
 function loadRandomGraph() {
 	// exemplu
 	var n = Math.random() * 4 + 6; // numar intre 6 si 10
@@ -38,6 +38,7 @@ function loadRandomGraph() {
 	loadGraphFromMatrix(n, a);
 };
 
+// TODO: Not reliable
 function loadRandomConnectedGraph() {
 	// marime matrice
 	var n = Math.floor(Math.random() * 4 + 12); // numar intre 12 si 16
@@ -86,7 +87,7 @@ function loadRandomConnectedGraph() {
 	loadGraphFromMatrix(n, a);
 };
 
-// verifica tipul input-ului si il incarca
+// Renders the graph from user input or one at random
 function render() {
 	switch ($('input[name=type]:checked').val()) {
     case "adjacency":
@@ -104,51 +105,42 @@ function render() {
     }
 }
 
-// ia inputul ca matrice de adiacenta si randeaza pe ecran
+// Takes user input as adjacency matrix and renders it
 function parseAdjacencyMatrix() {
 	var textbox = $('#input-text-box').val();
 	var rows = textbox.split("\n");
 	var n = rows.length;
 
-	// are grija de situatia in care utilizatorul introduce un rand nou gol dupa matrice
+	// Deletes possible empty row at the end
 	if (rows[n-1] == "") {
 		delete rows[n-1];
 		n--;
 	}
 
-	// initializeaza matricea goala
+	// Init array
 	var a = []; 
 	for (var i = 0; i < n; i++) {
-		a[i] = [];
-	}
-
-	for (var i = 0; i < n; i++) {
-		var row = rows[i];
-		a[i] = row.split(" "); 
+		a[i] = rows[i].split(" "); 
 	}
 
 	loadGraphFromMatrix(n, a);
 }
 
-//  ia inputul ca lista muchiilor si randeaza pe ecran
+// Takes user input as edge list and renders it
 function parseEdgeList() {
 
 	var textbox = $('#input-text-box').val();
 	var rows = textbox.split("\n");
 	var m = rows.length;
 
-	// are grija de situatia in care utilizatorul introduce un rand nou gol dupa matrice
+	// Deletes possible empty row at the end
 	if (rows[m-1] == "") {
-		m--;
 		rows.length--;
+		m--;
 	}
 
-	// initializeaza o lista goala
+	// Initialize list
 	var edgelist = []; 
-	for (var i = 0; i < m; i++) {
-		edgelist[i] = [];
-	}
-
 	for (var i = 0; i < m; i++) {
 		var row = rows[i];
 		edgelist[i] = row.split(" "); 
@@ -163,39 +155,36 @@ function parseEdgeList() {
 			n = parseInt(edgelist[i][1]);
 	}
 
-	// initializaza matricea goala
+	// Initialize matrix
 	var a = []; 
 	for (var i = 0; i < n; i++) {
 		a[i] = [];
-	}
-
-	for (var i = 0; i < n; i++) {
 		for (var j = 0; j < n; j++) {
 			a[i][j] = 0; 
 		}
 	}
 	
 	for (var i = 0; i < m; i++) {
-		var pereche = edgelist[i];
-		a[pereche[0]-1][pereche[1]-1] = 1;
+		var pair = edgelist[i];
+		a[pair[0]-1][pair[1]-1] = 1;
 	} 
 	
 	loadGraphFromMatrix(n, a);
 }
 
 
-// ia o matrice de adiacenta si o afisaza
+// Renders and adjacency matrix
 function loadGraphFromMatrix(n, a) {
-	// curata graful
+	// TODO: WHY THIS?
 	graph.clear();
 
-	// adauga nodurile la graf
+	// Adds nodes
 	var nodes = [];
 	for (var i = 1; i <= n; i++)
 		nodes[i] = graph.newNode({label: i});
 
 
-	// adauga muchiile la graf
+	// Adds edges
 	for (var i = 1; i <= n; i++)
 		for (var j = 1; j <= n; j++)
 			if (a[i-1][j-1] == 1) {
@@ -203,7 +192,7 @@ function loadGraphFromMatrix(n, a) {
 			}
 };
 
-// creaza graful
+// Creates graph
 function makeGraph() {
 
 	var springy = window.springy = $('#springydemo').springy({
@@ -214,9 +203,8 @@ function makeGraph() {
 	});
 };
 
-// porneste aplicatia la incarcarea paginii
+// Starts app when document is ready
 jQuery(document).ready(function(){
 	makeGraph();
 	loadRandomGraph();
-
 });
