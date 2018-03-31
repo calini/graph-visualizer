@@ -1,5 +1,4 @@
 // Author: Calin Ilie
-// Revamp: 2017
 
 // Returns a random color
 function getRandomColor() {
@@ -38,7 +37,7 @@ function loadRandomGraph() {
 	loadGraphFromMatrix(n, a);
 };
 
-// TODO: Not reliable
+// TODO: Bad algorithm. Will produce connected graphs, but only a certain subset of them.
 function loadRandomConnectedGraph() {
 	// marime matrice
 	var n = Math.floor(Math.random() * 4 + 12); // numar intre 12 si 16
@@ -96,10 +95,10 @@ function render() {
     case "edgelist":
     	parseEdgeList();
     	break;
-    case "neconex":
+    case "disconnected":
     	loadRandomGraph();
     	break;
-    case "conex":
+    case "connected":
     	loadRandomConnectedGraph();
     	break;
     }

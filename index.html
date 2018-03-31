@@ -26,14 +26,14 @@
     <link rel="stylesheet" href="css/style.css">
 
     <!-- JavaScript-ul personal -->
-    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
 </head>
 
 <body>
     <div class="container">
 
         <div id="top">
-            <h3>Simple Graph Visualizer</h3>
+            <h3>Graph Visualizer</h3>
         </div>
 
         <div id="graf">
@@ -44,14 +44,12 @@
             <form action="javascript:void(0);" onsubmit="render()">
                 <fieldset>
                     <textarea id="input-text-box"></textarea>
-
-                    <input type="radio" name="type" value="adjacency" checked> matrice de adiacenta
-                    <br>
-                    <input type="radio" name="type" value="edgelist"> lista arcelor
-                    <br>
-                    NOU! Genereaza automat: <input type="radio" name="type" value="neconex" checked> neconex
-                    <input type="radio" name="type" value="conex"> tare conex
-
+                    <h5>Input graph</h5>
+                    <input type="radio" name="type" value="adjacency" checked> Adjacency Matrix <br>
+                    <input type="radio" name="type" value="edgelist"> Arch List<br>
+                    <h5>Generate random graph</h5>
+                    <input type="radio" name="type" value="disconnected" checked> Disconnected <br>
+                    <input type="radio" name="type" value="connected"> Connected [beta] <br>
                     <button type="submit" id="render-button">Render</button>
                 </fieldset>
             </form>
