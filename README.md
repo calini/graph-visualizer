@@ -1,6 +1,5 @@
-# Graph Visualizer
-Old high school project for visualizing graphs.
+# Grapheen
 
-You can input different formats like the adjancy matrix and have your matrix be rendered by Springy.
+Rewrite of my high little school project for visualizing graphs.
 
-Check it out: [graph-visualizer](https://calini.github.io/graph-visualizer)
+> [Live demo](https://calini.github.io/grapheen)
