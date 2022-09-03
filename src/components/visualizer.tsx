@@ -1,17 +1,17 @@
 import React, {useEffect, useState} from "react";
 import Graph, {MultiDirectedGraph} from "graphology";
-import { SigmaContainer, useLoadGraph, useRegisterEvents} from "@react-sigma/core";
+import {SigmaContainer, useLoadGraph, useRegisterEvents, useSigma} from "@react-sigma/core";
 import "@react-sigma/core/lib/react-sigma.min.css";
 import ForceSupervisor from "graphology-layout-force/worker";
 import chroma from "chroma-js";
 import {useWorkerLayoutForce} from "@react-sigma/layout-force";
+import sigma from "sigma";
 
 export const LoadGraph = () => {
+    const sigma = useSigma();
     const loadGraph = useLoadGraph();
     const registerEvents = useRegisterEvents();
     const {stop, start, kill, isRunning} = useWorkerLayoutForce({})
-
-    const [count, setCount] = useState(0);
 
     /*
       settings: {
@@ -39,13 +39,38 @@ export const LoadGraph = () => {
 
         start();
 
+        let isDragging = false;
+        let draggedNode:String = "";
+
         registerEvents({
             mouseup: event => {
-                console.log("mouseup", event.x, event.y)
+                console.log("mouse up");
+
+                if (draggedNode) {
+                    graph.removeNodeAttribute(draggedNode, "highlighted");
+                }
+                isDragging = false;
+                draggedNode = "";
             },
             downNode: event => {
                 console.log("mouse down on a node", event.event.x, event.event.y)
+                isDragging = true;
+                draggedNode = event.node;
+                graph.setNodeAttribute(draggedNode, "highlighted", true);
             },
+            mousemove: event => {
+                if (isDragging) {
+                    let pos = sigma.viewportToGraph(event);
+                    graph.setNodeAttribute(draggedNode, "x", pos.x);
+                    graph.setNodeAttribute(draggedNode, "y", pos.y);
+
+                    // Prevent sigma to move camera:
+                    event.preventSigmaDefault();
+                    event.original.preventDefault();
+                    event.original.stopPropagation();
+                }
+            }
+
         })
 
 
