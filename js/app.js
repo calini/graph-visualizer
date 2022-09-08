@@ -95,11 +95,8 @@ function render() {
     case "edgelist":
     	parseEdgeList();
     	break;
-    case "disconnected":
+    case "random":
     	loadRandomGraph();
-    	break;
-    case "connected":
-    	loadRandomConnectedGraph();
     	break;
     }
 }
